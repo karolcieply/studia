@@ -1,0 +1,3 @@
+@echo off
+clipbrd
+pause

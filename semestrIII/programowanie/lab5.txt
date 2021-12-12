@@ -1,0 +1,118 @@
+1
+public class Main{
+    public static void main(String[] args){
+        for(int i=0;i<10;i++){
+            System.out.println(i);
+        }
+    }
+}
+2
+public class Main{
+    public static void main(String[] args){
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                System.out.print(j*i+" ");
+            }
+            System.out.println("");
+        }
+    }
+}
+3
+import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int n = 10;
+        int[] tab = new int[10];
+        for(int i=0;i<n;i++){
+            tab[i] = scan.nextInt();
+        }
+        int min = tab[0];
+        int max = tab[0];
+        for(int i=0;i<n;i++){
+            if(tab[i]>max){
+                max = tab[i];
+            }
+            if(tab[i]<min){
+                min = tab[i];
+            }
+        }
+        System.out.println("min: "+ min);
+        System.out.println("max: "+ max);
+    }
+}
+
+4
+
+import java.util.Scanner;
+public class Main{
+    public static void main(String[] args){
+        Algorytm a1 = new Algorytm();
+        int tab[]={1,2,-3,4,5};
+        System.out.println(a1.avg(tab));
+        System.out.println(a1.search(tab));
+    }
+}
+public class Algorytm {
+    public static int search(int[] tab){
+        int index=0;
+        int min = tab[0];
+        for (int i = 0;i<tab.length;i++) {
+            if(min>tab[i]){
+                min=tab[i];
+                index=i;
+            }
+        }
+        return index;
+    }
+    public static int avg(int[] tab){
+        int suma=0;
+        for (int i : tab) {
+            suma+=i;            
+        }
+        return suma/tab.length;
+    }
+   }
+
+
+5
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.Arrays;
+public class Main{
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        int[] tab = new int[5];
+        for(int i=0;i<5;i++){
+            tab[i]=in.nextInt();
+        }
+        Arrays.sort(tab);
+        for (int i : tab) {
+            System.out.println(i+" ");
+        }
+    }
+}
+
+
+
+6
+
+import java.util.Scanner;
+import java.util.Collections;
+import java.util.Arrays;
+public class Main{
+    public static void main(String[] args){
+        Scanner in = new Scanner(System.in);
+        Number[] tab = new Number[5];
+        for(int i=0;i<5;i++){
+            tab[i]=in.nextInt();
+        }
+        Arrays.sort(tab);
+        for (int i : tab) {
+            System.out.println(i+" ");
+        }
+    }
+}
+
+

@@ -1,0 +1,95 @@
+#1
+public class Dane{
+    String imie,numerTelefonu;
+    public Dane(String imie,String numerTelefonu){
+        this.imie=imie;
+        this.numerTelefonu=numerTelefonu;
+    }
+    public String getPhoneNumber(){
+        return this.numerTelefonu;
+    }
+    public String getImie(){
+        return this.imie;
+    }
+}
+
+import java.util.Scanner;
+import java.util.Collections;
+public class Main{
+    public static void main(String[] args){
+        Dane telefon = new Dane("Karol","123");
+        System.out.println(telefon.getImie());
+        System.out.println(telefon.getPhoneNumber());
+    }
+}
+
+#2
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Collections;
+public class Main{
+    public static void main(String[] args){
+        Dane tab[] = new Dane[3];
+        tab[0] = new Dane("ghi","789");
+        tab[1] = new Dane("def","456");
+        tab[2] = new Dane("abc","123");
+        Arrays.sort(tab);
+        for (Dane dane : tab) {
+            System.out.println(dane.getImie());            
+        }
+    }
+}
+
+public class Dane implements Comparable<Dane>{
+    String imie,numerTelefonu;
+    public Dane(String imie,String numerTelefonu){
+        this.imie=imie;
+        this.numerTelefonu=numerTelefonu;
+    }
+    public String getPhoneNumber(){
+        return this.numerTelefonu;
+    }
+    public String getImie(){
+        return this.imie;
+    }
+    @Override
+    public int compareTo(Dane dane){
+        return this.imie.compareTo(dane.imie);
+    }
+}
+
+#3
+
+public class Dane implements Comparable<Dane>{
+    String imie,numerTelefonu;
+    public Dane(String imie,String numerTelefonu){
+        this.imie=imie;
+        this.numerTelefonu=numerTelefonu;
+    }
+    public String getPhoneNumber(){
+        return this.numerTelefonu;
+    }
+    public String getImie(){
+        return this.imie;
+    }
+    @Override
+    public int compareTo(Dane dane){
+        return -this.imie.compareTo(dane.imie);
+    }
+}
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.Collections;
+public class Main{
+    public static void main(String[] args){
+        Dane tab[] = new Dane[3];
+        tab[0] = new Dane("ghi","789");
+        tab[1] = new Dane("def","456");
+        tab[2] = new Dane("abc","123");
+        Arrays.sort(tab);
+        for (Dane dane : tab) {
+            System.out.println(dane.getImie());            
+        }
+    }
+}
