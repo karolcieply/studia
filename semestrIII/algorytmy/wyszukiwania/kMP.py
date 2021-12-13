@@ -1,5 +1,3 @@
-
-
 def prepareTable(pattern):
     p = [0, 0]
     i = 0

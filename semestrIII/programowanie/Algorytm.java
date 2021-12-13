@@ -1,20 +1,16 @@
 public class Algorytm {
-    public static int search(int[] tab){
-        int index=0;
-        int min = tab[0];
-        for (int i = 0;i<tab.length;i++) {
-            if(min>tab[i]){
-                min=tab[i];
-                index=i;
+    public static int[] bubbleSort(int[] tab){
+        int temp = 0;
+        for(int i=0; i<tab.length; i++){
+            for(int j=1; j<(tab.length-i); j++){
+                if(tab[j]<tab[j-1]){
+                    temp = tab[j-1];
+                    tab[j-1] = tab[j];
+                    tab[j] = temp;
+                }
             }
+
         }
-        return index;
+        return tab;
     }
-    public static int avg(int[] tab){
-        int suma=0;
-        for (int i : tab) {
-            suma+=i;            
-        }
-        return suma/tab.length;
-    }
-   }
+}
