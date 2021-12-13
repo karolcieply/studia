@@ -18,6 +18,7 @@ goto x
 :info
 cls
 echo Karol Cieply odwrocona piramida
+echo Program wypisuje kolejne wyrazy z slownika usuwajac za każdym razem jedna litere
 goto x
 :backup
 if not exist backup\ (
