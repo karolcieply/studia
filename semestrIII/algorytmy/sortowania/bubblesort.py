@@ -1,22 +1,22 @@
 from heapq import heapify
 
 
-class sortMethod():
+class sortMethod:
     def insertionSort(tab: list) -> list:
         for i in range(1, len(tab)):
             key = tab[i]
             j = i - 1
             while j >= 0 and key < tab[j]:
-                tab[j+1] = tab[j]
+                tab[j + 1] = tab[j]
                 j -= 1
-            tab[j+1] = key
+            tab[j + 1] = key
         return tab
 
     def bubbleSort(tab: list) -> list:
         for i in range(len(tab)):
-            for j in range(len(tab)-1):
-                if tab[j] > tab[j+1]:
-                    tab[j], tab[j+1] = tab[j+1], tab[j]
+            for j in range(len(tab) - 1):
+                if tab[j] > tab[j + 1]:
+                    tab[j], tab[j + 1] = tab[j + 1], tab[j]
         return tab
 
     def quickSort(array):

@@ -8,6 +8,7 @@ def kR(text, pattern, hPattern, f, q):
         if hTemp == hPattern:
             return i
 
+
 def h(pattern, f, q):
     result = 0
     for i in range(len(pattern)):

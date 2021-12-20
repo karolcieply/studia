@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Stack:
     def __init__(self, sizeOf=6):
         self.stack = np.full([sizeOf], np.inf)
@@ -23,19 +24,18 @@ class Stack:
             return temp
 
     def search(self, param):
-        return [x for x in range(len(self.stack)) if self.stack[x]==param]
+        return [x for x in range(len(self.stack)) if self.stack[x] == param]
 
 
 class Queue:
     def __init__(self, sizeOf=6):
-        self.queue = np.full([sizeOf+1], np.inf)
+        self.queue = np.full([sizeOf + 1], np.inf)
         self.head = 0
         self.tail = 0
         self.maxSize = sizeOf
 
     def enqueue(self, param):
-        if self.head == self.tail + 1 or (self.tail == self.maxSize and
-                                          self.head == 0):
+        if self.head == self.tail + 1 or (self.tail == self.maxSize and self.head == 0):
             print("Kolejka przepełniona")
             return
         if self.tail != self.maxSize:
@@ -56,19 +56,18 @@ class Queue:
         return temp
 
     def search(self, param):
-        return [x for x in range(len(self.queue)) if self.queue[x]==param]
+        return [x for x in range(len(self.queue)) if self.queue[x] == param]
 
 
 class PriorityQueue:
     def __init__(self, sizeOf=6):
-        self.queue = np.full([sizeOf+1], np.inf)
+        self.queue = np.full([sizeOf + 1], np.inf)
         self.head = 0
         self.tail = 0
         self.maxSize = sizeOf
 
     def enqueue(self, param):
-        if self.head == self.tail + 1 or (self.tail == self.maxSize and
-                                          self.head == 0):
+        if self.head == self.tail + 1 or (self.tail == self.maxSize and self.head == 0):
             print("Kolejka przepełniona")
             return
         if self.tail != self.maxSize:
@@ -76,8 +75,9 @@ class PriorityQueue:
         else:
             self.tail = 0
         self.queue[self.tail] = param
+
     def search(self, param):
-        return [x for x in range(len(self.queue)) if self.queue[x]==param]
+        return [x for x in range(len(self.queue)) if self.queue[x] == param]
 
     def dequeue(self):
         if self.head == self.tail:
@@ -94,7 +94,7 @@ class PriorityQueue:
         return temp
 
 
-class oneWayList():
+class oneWayList:
     def __init__(self, x, next=None):
         self.next = next
         self.value = x
@@ -114,15 +114,15 @@ class oneWayList():
             else:
                 return self.next.add(x)
         elif index > 0:
-            return self.next.add(x, index-1)
+            return self.next.add(x, index - 1)
         elif index == 0:
             self.next = oneWayList(x, self.next)
             return
 
     def search(self, param, index=-1):
         if self.next:
-            if x := self.next.search(param, index+1):
-                return f"{index}, {x}" if self.value==param else x
+            if x := self.next.search(param, index + 1):
+                return f"{index}, {x}" if self.value == param else x
         else:
             return index
 
@@ -138,8 +138,7 @@ class oneWayList():
             temp = self.next
             self.next = self.next.next
             return temp.value
-        return self.next.delete(index-1)
-
+        return self.next.delete(index - 1)
 
 
 def main():

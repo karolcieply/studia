@@ -1,12 +1,15 @@
 import numpy as np
 from heapq import heapify, heappush, heappop
-graph = np.array([
-    [0, 3, 0, 3, 5],
-    [3, 0, 5, 1, 0],
-    [0, 5, 0, 2, 0],
-    [3, 1, 2, 0, 1],
-    [5, 0, 0, 1, 0]
-    ])
+
+graph = np.array(
+    [
+        [0, 3, 0, 3, 5],
+        [3, 0, 5, 1, 0],
+        [0, 5, 0, 2, 0],
+        [3, 1, 2, 0, 1],
+        [5, 0, 0, 1, 0],
+    ]
+)
 pred = np.full(len(graph), -1)
 k = np.full(len(graph), np.inf)
 # s = randint(0, len(graph)-1)
