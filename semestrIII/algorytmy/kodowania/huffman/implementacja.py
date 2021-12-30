@@ -41,6 +41,7 @@ def huffman(Points, Probability):
         a, b = nodes.pop(1), nodes.pop(0)
         nodes.append(Node(a, b))
     return dict((v, k) for k, v in nodes[0].getCode().items())
+    # return nodes[0].getCode()
 
 
 S = ["a", "b", "c", "d", "e", "f"]
