@@ -1,77 +1,105 @@
-class sortMethod:
-    def insertionSort(tab: list) -> list:
-        for i in range(1, len(tab)):
-            key = tab[i]
-            j = i - 1
-            while j >= 0 and key < tab[j]:
-                tab[j + 1] = tab[j]
-                j -= 1
-            tab[j + 1] = key
+import time
+import random
+
+
+# class sortMethod:
+def insertionSort(tab: list) -> list:
+    for i in range(1, len(tab)):
+        key = tab[i]
+        j = i - 1
+        while j >= 0 and key < tab[j]:
+            tab[j + 1] = tab[j]
+            j -= 1
+        tab[j + 1] = key
+    return tab
+
+
+def bubbleSort(tab: list) -> list:
+    for i in range(len(tab)):
+        for j in range(len(tab) - 1):
+            if tab[j] > tab[j + 1]:
+                tab[j], tab[j + 1] = tab[j + 1], tab[j]
+    return tab
+
+
+def quickSort(tab: list) -> list:
+    if len(tab) <= 1:
         return tab
+    else:
+        pivot = tab[0]
+        less = [i for i in tab[1:] if i <= pivot]
+        greater = [i for i in tab[1:] if i > pivot]
+        return quickSort(less) + [pivot] + quickSort(greater)
 
-    def bubbleSort(tab: list) -> list:
-        for i in range(len(tab)):
-            for j in range(len(tab) - 1):
-                if tab[j] > tab[j + 1]:
-                    tab[j], tab[j + 1] = tab[j + 1], tab[j]
+
+def mergeSort(tab):
+    if len(tab) <= 1:
         return tab
+    else:
+        return merge(mergeSort(tab[: len(tab) // 2]), mergeSort(tab[len(tab) // 2 :]),)
 
-    def quickSort(array):
-        if len(array) <= 1:
-            return array
+
+def merge(tab1, tab2):
+    tab3 = []
+    while len(tab1) > 0 and len(tab2) > 0:
+        if tab1[0] < tab2[0]:
+            tab3.append(tab1[0])
+            tab1.remove(tab1[0])
         else:
-            pivot = array[0]
-            less = [i for i in array[1:] if i <= pivot]
-            greater = [i for i in array[1:] if i > pivot]
-            return sortMethod.quickSort(less) + [pivot] + sortMethod.quickSort(greater)
-
-    def mergeSort(array):
-        if len(array) <= 1:
-            return array
-        else:
-            return sortMethod.merge(
-                sortMethod.mergeSort(array[: len(array) // 2]),
-                sortMethod.mergeSort(array[len(array) // 2 :]),
-            )
-
-    def merge(array1, array2):
-        array3 = []
-        while len(array1) > 0 and len(array2) > 0:
-            if array1[0] < array2[0]:
-                array3.append(array1[0])
-                array1.remove(array1[0])
-            else:
-                array3.append(array2[0])
-                array2.remove(array2[0])
-        if len(array1) == 0:
-            array3.extend(array2)
-        else:
-            array3.extend(array1)
-        return array3
-
-    def heapify(array, i, n):
-        l = 2 * i + 1
-        r = 2 * i + 2
-        if l < n and array[l] > array[i]:
-            largest = l
-        else:
-            largest = i
-        if r < n and array[r] > array[largest]:
-            largest = r
-        if largest != i:
-            array[i], array[largest] = array[largest], array[i]
-            sortMethod.heapify(array, largest, n)
-
-    def heapSort(array):
-        n = len(array)
-        for i in range(n // 2 - 1, -1, -1):
-            sortMethod.heapify(array, i, n)
-        for i in range(n - 1, 0, -1):
-            array[i], array[0] = array[0], array[i]
-            sortMethod.heapify(array, 0, i)
-        return array
+            tab3.append(tab2[0])
+            tab2.remove(tab2[0])
+    if len(tab1) == 0:
+        tab3.extend(tab2)
+    else:
+        tab3.extend(tab1)
+    return tab3
 
 
-print(sortMethod.insertionSort([5, 2, 1, 4, 3]))
-print(sortMethod.bubbleSort([5, 2, 1, 4, 3]))
-print(sortMethod.quickSort([5, 2, 1, 4, 3]))
+def heapify(tab, i, n):
+    l = 2 * i + 1
+    r = 2 * i + 2
+    if l < n and tab[l] > tab[i]:
+        largest = l
+    else:
+        largest = i
+    if r < n and tab[r] > tab[largest]:
+        largest = r
+    if largest != i:
+        tab[i], tab[largest] = tab[largest], tab[i]
+        heapify(tab, largest, n)
+
+
+def heapSort(tab):
+    n = len(tab)
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(tab, i, n)
+    for i in range(n - 1, 0, -1):
+        tab[i], tab[0] = tab[0], tab[i]
+        heapify(tab, 0, i)
+    return tab
+
+
+def main():
+    toSort = [random.randint(0, 100) for x in range(nOSamples)]
+    start = time.time()
+    bubbleSort(list(toSort))
+    print(f"BubbleSort dla {nOSamples}: {time.time()-start}")
+    start = time.time()
+    insertionSort(list(toSort))
+    print(f"InsertionSort dla {nOSamples}: {time.time()-start}")
+    start = time.time()
+    quickSort(list(toSort))
+    print(f"QuickSort dla {nOSamples}: {time.time()-start}")
+    start = time.time()
+    mergeSort(list(toSort))
+    print(f"MergeSort dla {nOSamples}: {time.time()-start}")
+    start = time.time()
+    heapSort(list(toSort))
+    print(f"HeapSort dla {nOSamples}: {time.time()-start}")
+
+
+if __name__ == "__main__":
+    nOSamples = 1000
+    main()
+    nOSamples = 10000
+    main()
