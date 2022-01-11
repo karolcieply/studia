@@ -13,7 +13,8 @@ else goto x
 :start
 cls 
 python main.py
-if exist result.html (result.html)
+python createSite.py
+output/result.html
 goto x
 :info
 cls

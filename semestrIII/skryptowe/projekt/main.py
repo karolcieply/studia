@@ -1,5 +1,6 @@
 import os
 import time
+import json
 from createSite import createSite
 
 
@@ -20,7 +21,7 @@ class piramid:
                 letter
                 for letter in range(len(oldWord))
                 if sorted(word)
-                == sorted(oldWord)[:letter] + sorted(oldWord)[letter + 1 :]
+                == sorted(oldWord)[:letter] + sorted(oldWord)[letter + 1:]
             ]
             and [letter for letter in word if letter in self.singleLetterWords]
         ]
@@ -55,11 +56,9 @@ def main():
                 "time": round(time.time() - startTime, 5),
             }
             Piramid.resultsTemp = []
-    for r in Piramid.results:
-        print(Piramid.results[r])
-    if os.path.exists("result.html"):
-        os.remove("result.html")
-    createSite(Piramid.results)
+    with open("output/result.txt", "w") as f:
+        f.write(json.dumps(Piramid.results))
+    # createSite(Piramid.results)
 
 
 if __name__ == "__main__":
