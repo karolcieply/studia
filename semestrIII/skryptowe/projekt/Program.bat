@@ -14,7 +14,7 @@ else goto x
 cls 
 python main.py
 python createSite.py
-output/result.html
+start raport\result.html
 goto x
 :info
 cls

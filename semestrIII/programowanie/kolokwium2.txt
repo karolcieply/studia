@@ -1,0 +1,267 @@
+Karol Cieply studia stacjonarne kolokwium 2 programowanie 3
+#Zadanie 1
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        try {
+            Algorytm scalar = new Algorytm();
+            ArrayList<Double[]> test = scalar.Vectors();
+            System.out.print("Iloczyn skalarny wynosi: " +
+                    scalar.scalar(test.get(0), test.get(1)));
+        } catch (Exception e) {
+            System.out.print(e);
+        }
+    }
+}
+
+class Algorytm {
+    public Algorytm() {
+    }
+
+    public ArrayList<Double[]> Vectors() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Podaj ilość wymiarów w wektorze: ");
+        int vDimensions = in.nextInt();
+        Double[] v1 = new Double[vDimensions];
+        Double[] v2 = new Double[vDimensions];
+        for (int i = 0; i < vDimensions * 2; i++) {
+            if (i < vDimensions) {
+                System.out.print("Wektor nr1," + i + ": ");
+                v1[i] = in.nextDouble();
+            } else {
+                System.out.print("Wektor nr2," + i % vDimensions + ": ");
+                v2[i % vDimensions] = in.nextDouble();
+            }
+        }
+        ArrayList<Double[]> vectors = new ArrayList<Double[]>();
+        vectors.add(v1);
+        vectors.add(v2);
+        return vectors;
+    }
+
+    public Double scalar(Double[] v1, Double[] v2) throws Exception {
+        Double scalar = 0.0;
+        for (int i = 0; i < v1.length; i++) {
+            scalar += v1[i] * v2[i];
+        }
+        return scalar;
+    }
+}
+zad 2
+import java.util.*;
+import java.io.*;
+
+public class Main {
+    public static void main(String args[]) {
+        try {
+            Scanner in = new Scanner(System.in);
+            Scanner file = new Scanner(new File(in.nextLine()));
+            ArrayList<Double> array = new ArrayList<Double>();
+            while (file.hasNext()) {
+                array.add(file.nextDouble());
+            }
+            Algorytm alg = new Algorytm(array);
+            alg.sort();
+        } catch (Exception e) {
+            System.out.print(e);
+        }
+    }
+}
+
+class Algorytm {
+    ArrayList<Double> array;
+
+    public Algorytm(ArrayList<Double> array) {
+        this.array = array;
+    }
+
+    public void sort() {
+        Double temp;
+        System.out.print("Before: ");
+        for (Double a : this.array) {
+            System.out.print(a + ",");
+        }
+        for (int i = 0; i < this.array.size() - 1; i++) {
+            for (int j = 0; j < this.array.size() - i - 1; j++) {
+                if (this.array.get(j + 1) < this.array.get(j)) {
+                    temp = this.array.get(j);
+                    this.array.set(j, this.array.get(j + 1));
+                    this.array.set(j + 1, temp);
+                }
+            }
+        }
+        System.out.print("\nAfter: ");
+        for (Double a : this.array) {
+            System.out.print(a + ",");
+        }
+    }
+
+}
+# zad 3
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.*;
+
+public class Main {
+    public static void main(String args[]) {
+        FillFrame frame = new FillFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+
+class FillFrame extends JFrame {
+    public static final int WIDTH = 400;
+    public static final int HEIGHT = 400;
+
+    public FillFrame() {
+        setTitle("TestWypelnienia");
+        setSize(WIDTH, HEIGHT);
+        fillPanel panel = new fillPanel();
+        Container contentPanel = getContentPane();
+        contentPanel.add(panel);
+    }
+}
+
+class fillPanel extends JPanel {
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        double leftX = 100;
+        double upY = 100;
+        double width = 200;
+        double height = 150;
+        Rectangle2D pros = new Rectangle2D.Double(leftX, upY, width, height);
+        g2.setPaint(Color.red);
+        g2.fill(pros);
+        Ellipse2D ellipse = new Ellipse2D.Double();
+        ellipse.setFrame(pros);
+        g2.setPaint(new Color(0, 128, 128));
+        g2.fill(ellipse);
+    }
+}
+# zad 4
+public class Main {
+    public static void main(String args[]) {
+        // Wywołanie konstruktora klasy bazowej jest konieczne gdy nie posiada
+        // ona konstruktora domyślnego
+        Pracownik p1 = new Pracownik();
+        Pracownik p2 = new Pracownik("Karol", "Cieply", 21, 20.0);
+        Pracownik_projekt P1 = new Pracownik_projekt();
+        Pracownik_projekt P2 = new Pracownik_projekt("Karol", "Cieply", 21, 20.0, "asd", "asd");
+        System.out.println(p1.getName());
+        System.out.println(p2.getName());
+        System.out.println(P1.getName());
+        System.out.println(P2.getName());
+    }
+}
+
+class Pracownik {
+    private String name;
+    private String surname;
+    private int age;
+    private double salary;
+
+    public Pracownik(String name, String surname, int age, double salary) {
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.salary = salary;
+    }
+
+    public Pracownik() {
+        this.name = "default";
+        this.surname = "default";
+        this.age = 0;
+        this.salary = 0;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+}
+
+class Pracownik_projekt extends Pracownik {
+    private String description;
+    private String projectName;
+
+    public Pracownik_projekt(String imie, String nazwisko, int wiek, double wynagrodzenie, String opis,
+            String nazwa_projektu) {
+        super(imie, nazwisko, wiek, wynagrodzenie);
+        this.description = opis;
+        this.projectName = nazwa_projektu;
+    }
+
+    public Pracownik_projekt() {
+        this.description = "";
+        this.projectName = "";
+    }
+
+}
+#5
+public class Main {
+    public static void main(String args[]) {
+        punkt3DColor p1 = new punkt3DColor(1.0, 2.0, 3.0, 10, 20, 30);
+        punkt3DColor p2 = new punkt3DColor(1.0, 2.0, 3.0, 100000, -290, 30);
+        System.out.println(p1);
+        System.out.println(p2);
+    }
+}
+
+class punkt2D {
+    protected Double x;
+    protected Double y;
+
+    punkt2D(Double x, Double y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class punkt3D extends punkt2D {
+    protected Double z;
+
+    punkt3D(Double x, Double y, Double z) {
+        super(x, y);
+        this.z = z;
+    }
+}
+
+class punkt3DColor extends punkt3D {
+    protected int R;
+    protected int G;
+    protected int B;
+
+    punkt3DColor(Double x, Double y, Double z, int R, int G, int B) {
+        super(x, y, z);
+        if (R > 255) {
+            R = 255;
+        }
+        if (G > 255) {
+            G = 255;
+        }
+        if (B > 255) {
+            B = 255;
+        }
+        if (R < 0) {
+            R = 0;
+        }
+        if (G < 0) {
+            G = 0;
+        }
+        if (B < 0) {
+            B = 0;
+        }
+
+        this.R = R;
+        this.G = G;
+        this.B = B;
+    }
+
+    public String toString() {
+        return "x:" + this.x + " y:" + this.y + " z:" + this.z + " RGB(" + this.R + ", " + this.G + ", " + this.B + ")";
+    }
+
+}

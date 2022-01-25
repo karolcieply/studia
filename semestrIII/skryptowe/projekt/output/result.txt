@@ -1,0 +1,1 @@
+{"piotr": {"result": ["Nie znaleziono"], "time": 0.00786}, "karol": {"result": ["a", "al", "alk", "alko", "karol"], "time": 0.02035}, "natalia": {"result": ["a", "aa", "ala", "alta", "altan", "ailant", "natalia"], "time": 0.0484}}

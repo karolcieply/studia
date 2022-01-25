@@ -36,7 +36,7 @@ def mergeSort(tab):
     if len(tab) <= 1:
         return tab
     else:
-        return merge(mergeSort(tab[: len(tab) // 2]), mergeSort(tab[len(tab) // 2 :]),)
+        return merge(mergeSort(tab[: len(tab) // 2]), mergeSort(tab[len(tab) // 2:]),)
 
 
 def merge(tab1, tab2):

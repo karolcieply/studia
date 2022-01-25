@@ -1,0 +1,5 @@
+liczby dziesietne | liczby osemkowe | liczby szesnastkowe
+--------------------------------------------------------
+240     | 0o360  |    0xF0
+71      | 0o107  |    0x47
+128     | 0o200  |    0x80

@@ -1,7 +1,5 @@
-import os
 import time
 import json
-from createSite import createSite
 
 
 class piramid:
@@ -28,13 +26,13 @@ class piramid:
 
     def recursion(self, words):
         for word in words:
-            if len(word) == 2:  # "Łapanie" końca ciągu
+            if len(word) == 2:
                 self.resultsTemp.append(
                     self.filterTable(self.singleLetterWords, word)[0]
-                )  # Dodawanie jednoliterowych
+                )
                 self.resultsTemp.append(word)
                 return True
-            elif self.recursion(self.filterTable(self.words, word)):  # x):
+            elif self.recursion(self.filterTable(self.words, word)):
                 self.resultsTemp.append(word)
                 return True
 
@@ -47,7 +45,7 @@ def main():
         startTime = time.time()
         if not Piramid.recursion([word]):
             Piramid.results[word] = {
-                "result": ["Nie znaleziono ciągu słów"],
+                "result": ["Nie znaleziono"],
                 "time": round(time.time() - startTime, 5),
             }
         else:
@@ -58,7 +56,6 @@ def main():
             Piramid.resultsTemp = []
     with open("output/result.txt", "w") as f:
         f.write(json.dumps(Piramid.results))
-    # createSite(Piramid.results)
 
 
 if __name__ == "__main__":

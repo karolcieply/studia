@@ -1,0 +1,58 @@
+#1
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        int N = in.nextInt();
+        int x = 1;
+        for (int i = 2; i <= N; i++) {
+            x *= i;
+        }
+        System.out.println(x);
+    }
+}
+#2
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        System.out.println(silnia(in.nextInt()));
+    }
+
+    static int silnia(int n) {
+        if (n > 1)
+            return n * silnia(n - 1);
+        else
+            return 1;
+    }
+}
+
+#3
+
+import java.util.*;
+
+public class Main {
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        int[] a = { 1, 2, 3 };
+        int[] b = { 4, 5 };
+        for (int i : scalaj(a, b)) {
+            System.out.println(i);
+        }
+    }
+
+    static int[] scalaj(int[] a, int[] b) {
+        int[] c = new int[a.length + b.length];
+        for (int i = 0; i < a.length + b.length; i++) {
+            if (i < a.length) {
+                c[i] = a[i];
+            } else {
+                c[i] = b[i % a.length];
+            }
+
+        }
+        return c;
+    }
+}
