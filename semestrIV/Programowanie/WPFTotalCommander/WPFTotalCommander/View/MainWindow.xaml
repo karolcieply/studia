@@ -10,7 +10,7 @@
         Title="WPFTotalCommander" Height="600" Width="800" Background="LightGray">
 
     <Window.DataContext>
-        <vm:ViewModelHandler x:Name="viewModelBrain"/>
+        <vm:ViewModelHandler x:Name="viewModelHandler"/>
     </Window.DataContext>
     
     <Grid>
