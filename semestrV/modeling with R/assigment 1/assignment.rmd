@@ -1,0 +1,140 @@
+---
+title: "Assignment 1"
+author: "Karol Cieply"
+date: "10.11.2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Task 1
+a. Formula for the corresponding Cumulative Distribution Function:
+$$
+F(z)=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^ze^{\frac{-y^2}{2}}dy
+$$
+
+b. Approximate percentage of the ovserved values within 3 standard deviations of the mean:
+
+```{r}
+apx_prc <- (pnorm(3) - pnorm(-3)) * 100
+```
+$$
+P(\mu-3\sigma\leq Z\leq\mu+3\sigma) = `r apx_prc`\%
+$$
+
+c. Value of z is such that F(z) = 0.3?
+
+```{r}
+z <- qnorm(0.3)
+```
+$$
+z = `r z`
+$$
+
+# Task 2
+```{r}
+value_a <- 0
+for (k in 1:100) {
+  value_a <- value_a + (3 * k^3) / (2 * k^2 + 1)
+}
+print(value_a)
+```
+$$
+\sum_{k=1}^{100}\frac{3k^3}{2k^2+1}=`r value_a`
+$$
+```{r}
+value_b <- 0
+for (k in 1:30) {
+  value_b <- value_b + ((k^2 - 1)^2) / (exp(k)^2)
+}
+value_b <- 1 / sqrt(pi) * value_b
+print(value_b)
+```
+$$
+\frac{1}{\sqrt{\pi}}\sum_{k=1}^{30}\frac{(k^2-1)^2}{e^{k^2}}=`r value_b`
+$$
+
+# Task 3
+```{r}
+df <- read.csv("Population.csv", sep = ";")
+df_2 <- df[df$Name %in% "POLAND" & df$Age %in% c("20-24", "25-29") & df$Projection.for.year %in% "projection for year 2025" & df$Sex %in% "total", c("Name", "Projection.for.year", "Age", "Domicile", "Value")]
+Value <- tapply(df_2$Value, df_2$Domicile, sum)
+Age <- c("20-29", "20-29", "20-29")
+Projection_for_year <- c("Total projection for year 2025", "Urban projection for year 2025", "Rural projection for year 2025")
+df_3 <- data.frame(Age, Projection_for_year, Value)
+df_3 <- df_3[order(-df_3$Value), ]
+Total_2025 <- df[df$Name %in% "POLAND" & df$Age %in% "total" & df$Projection.for.year %in% "projection for year 2025" & df$Sex %in% "total" & df$Domicile %in% "total", "Value"]
+df_3$Share <- round(100 * df_3$Value / Total_2025, 2)
+print(df_3)
+```
+
+## Task 4
+```{r}
+df <- read.csv("diamonds.csv")
+cut_mean <- aggregate(df$carat, list(df$cut), mean)
+color_mean <- aggregate(df$carat, list(df$color), mean)
+```
+The mean value of the carat for each cut:
+```{r, echo=FALSE}
+print(cut_mean)
+```
+The mean value of the carat for each color:
+```{r, echo=FALSE}
+print(color_mean)
+```
+
+## Task 5
+
+Sort function sorts the vector in ascending order.<br />
+Order function returns the indices of the vector in a sorted order.
+<br />
+For the vector c(3, 7, 12, 5, 9): 
+```{r}
+v <- c(3, 7, 12, 5, 9)
+sort(v)
+order(v)
+```
+Looking at the output we can see that the number at index 1 has smallest value and number at index 3 has biggest value 
+
+
+<br />
+I defined following data frame
+```{r}
+df  <- data.frame(
+"Location" = c(
+"Ascot",
+"Sunninghill",
+"Bracknell",
+"Camberley",
+"Bagshot",
+"Staines",
+"Windsor",
+"Maidenhead",
+"Reading",
+"Winkfield",
+"Warfield",
+"Newbury"),
+"Price" = c(
+325,
+201,
+157,
+162,
+164,
+101,
+211,
+188,
+95,
+117,
+188,
+121))
+```
+
+And then I used order function and sorted this data based on the Price column
+
+```{r}
+output_table <- df[order(-(df$Price)), ]
+print(output_table)
+```
+

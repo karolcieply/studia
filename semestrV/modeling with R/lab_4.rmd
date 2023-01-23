@@ -1,0 +1,69 @@
+---
+title: "Karol Cieply lab4"
+output: github_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## GitHub Documents
+
+This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+
+## Including Code
+
+You can include R code in the document as follows:
+
+```{r cars}
+summary(cars)
+```
+
+
+
+
+## Mean
+
+$${\displaystyle A={\frac {1}{n}}\sum _{i=1}^{n}a_{i}={\frac {a_{1}+a_{2}+\cdots +a_{n}}{n}}}$$
+```{r mean}
+mean((c(6,9,4,3,4,9,4,2,7,3,5,4,7,1,3,5,1,7,3,4,7,9,7,2,9,1,8,2,7,4)))
+```
+
+## Variance
+<br />
+$$\sigma^2 = \frac{\displaystyle\sum_{i=1}^{n}(x_i - \mu)^2} {n}$$
+$$\sigma^2 = \frac{\displaystyle\sum_{i=1}^{n}(x_i - \mu)^2} {n-1}$$
+
+```{r var}
+var(c(5,3,3,2,4,4,8,9,6,1,10,8,5,2,5,2,4,10,6,3,1,9,3,4,1,9,10,7,1,7))
+```
+
+## Mean price of diamonds based on color and cut
+```{r csv}
+diamonds <- read.csv("diamondsCSV.csv")
+diamondssum <- aggregate(diamonds$price, list(diamonds$cut), sum)
+diamondsavg <- aggregate(diamonds$price, list(diamonds$cut), mean)
+diamondsavgcolor <- aggregate(diamonds$price, list(diamonds$cut, diamonds$color), mean)
+diamondsavgcolorre <- reshape(diamondsavgcolor, idvar = "Group.1", timevar = "Group.2", direction = "wide")
+head(diamondsavgcolorre)
+```
+
+## Explaining what is outlier 
+In statistics, an outlier is a data point that differs significantly from other observations.
+```{r outlier}
+plot(iris$Sepal.Width ~ iris$Species)
+```
+
+
+
+
+```{r plot}
+X <- seq(-3,3,by=0.2)
+
+
+plot(X,dnorm(X),type="l")
+
+plot(X,pnorm(X),type="l")
+```
+

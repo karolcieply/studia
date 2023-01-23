@@ -1,0 +1,112 @@
+---
+title: "Assignment_2"
+author: "Jakub Rejdych"
+date: "15 12 2022"
+output: html_document
+---
+## Ex 1
+
+a)
+```{r}
+density_obs <- c(5.5, 5.61, 4.88, 5.07, 5.26, 5.55, 5.36, 5.29, 5.58, 5.65, 5.57, 5.53, 5.62, 5.29, 5.44, 5.34, 5.79, 5.1, 5.27, 5.39, 5.42, 5.47, 5.63, 5.34, 5.46, 5.3, 5.75, 5.68, 5.85)
+
+density_mean <- round(mean(density_obs), 3)
+density_mean
+```
+
+b)
+```{r}
+hist(density_obs,
+     main = "Density of the Earth observations",
+     xlab = "Density")
+```
+
+c)
+We use t-test when we want to compare the means of two groups. For hypothesis testing it determines whether a process or treatment has an effect on the population of interest, or whether two groups are different from one another. In our case it is the second application of the t-test. We want to compare our single population of density values to a given average, so t-test fits this job perfectly.
+
+d)
+```{r}
+t.test(density_obs, mu = 5.1)
+```
+We take the alternative hypothesis $H_1:\mu\neq5.1$, because true mean isn't equal to 5.1.
+
+e)
+```{r}
+t.test(density_obs, mu = 5.5, alternative = "less")
+```
+We take the alternative hypothesis $H_1:\mu<5.5$, because true mean is less than 5.5.
+
+## Ex 2
+```{r}
+t.test(iris$Sepal.Width ~ iris$Species, subset = iris$Species %in% c("virginica", "versicolor"))
+```
+This test is used to test the hypothesis that two populations have equal means.<br> 
+In the result of the test on Virginica and Versicolor from Iris dataset, we get the result that means of this two groups are different.
+
+## Ex 3
+```{r}
+model <- lm(iris$Petal.Width ~ iris$Petal.Length, data = iris)
+plot(iris$Petal.Length, iris$Petal.Width, xlab = "Petal length", ylab = "Petal width")
+abline(model, col = "blue")
+r_sq <- summary(model)$adj.r.squared
+```
+
+In our model $r^2 = `r r_sq`$ and I think that it means that our model has really good quality, because it reveals than more than 92% of the variability observed in the target variable is explained by the regression 
+
+## Ex 4
+a)
+```{r}
+alpha <- 0.05
+omnivores <- c(0.78, 0.80, 0.76, 0.78, 0.58, 0.64, 0.92, 0.86, 0.62, 0.54, 0.46)
+vegetarians <- c(0.50, 0.32, 0.78, 0.68, 0.46, 0.32, 0.50, 0.68, 0.32, 0.86, 0.40, 0.36, 0.44, 0.62, 0.26)
+m_omnivores <- qchisq(alpha / 2, length(omnivores) - 1)
+M_omnivores <- qchisq(1 - alpha / 2, length(omnivores) - 1)
+m_vegetarians <- qchisq(alpha / 2, length(vegetarians) - 1)
+M_vegetarians <- qchisq(1 - alpha / 2, length(vegetarians) - 1)
+m_omnivores
+M_omnivores
+m_vegetarians
+M_vegetarians
+omnivores_mean <- mean(omnivores)
+vegetarians_mean <- mean(vegetarians)
+vegetarians_var <- var(vegetarians)
+omnivores_var <- 2 * omnivores_mean
+omnivores_mean
+vegetarians_mean
+vegetarians_var
+chisq.test(omnivores)
+```
+
+1.
+$m = \chi_{n-1}^2(\frac{\alpha}{2})$ <br>
+$M = \chi_{n-1}^2(1 - \frac{\alpha}{2})$ <br>
+$m \leq \frac{(n - 1)S^2}{\sigma^2} \leq M$ <br>
+$\frac{m}{(n - 1)S^2} \leq \frac{1}{\sigma^2} \leq \frac{M}{(n - 1)S^2}$ <br>
+$\frac{(n - 1)S^2}{m} \leq \sigma^2 \leq \frac{(n - 1)S^2}{M}$ <br>
+$\frac{(n - 1)S^2}{\chi_{n-1}^2(\frac{\alpha}{2})} \leq \sigma^2 \leq \frac{(n - 1)S^2}{\chi_{n-1}^2(1 - \frac{\alpha}{2})}$
+
+2.
+$\sqrt{\frac{(n - 1)S^2}{m}} \leq \sigma \leq \sqrt{\frac{(n - 1)S^2}{M}}$ <br>
+$\sqrt{\frac{(n - 1)S^2}{\chi_{n-1}^2(\frac{\alpha}{2})}} \leq \sigma \leq \sqrt{\frac{(n - 1)S^2}{\chi_{n-1}^2(1 - \frac{\alpha}{2})}}$ <br>
+
+```{r}
+confidence_interval_var_omnivores_min <- ((length(omnivores) - 1) * omnivores_var ^ 2) / M_omnivores
+confidence_interval_var_omnivores_max <- ((length(omnivores) - 1) * omnivores_var ^ 2) / m_omnivores
+confidence_interval_std_omnivores_min <- sqrt(confidence_interval_var_omnivores_min)
+confidence_interval_std_omnivores_max <- sqrt(confidence_interval_var_omnivores_max)
+confidence_interval_var_vegetarians_min <- ((length(vegetarians) - 1) * vegetarians_var ^ 2) / M_vegetarians
+confidence_interval_var_vegetarians_max <- ((length(vegetarians) - 1) * vegetarians_var ^ 2) / m_vegetarians
+confidence_interval_std_vegetarians_min <- sqrt(confidence_interval_var_vegetarians_min)
+confidence_interval_std_vegetarians_max <- sqrt(confidence_interval_var_vegetarians_max)
+```
+
+Confidence interval of the population variances:<br>
+$\sigma_1min^2=$ `r confidence_interval_var_omnivores_min`<br>
+$\sigma_1max^2=$ `r confidence_interval_var_omnivores_max`<br>
+$\sigma_2min^2=$ `r format(confidence_interval_var_vegetarians_min, scientific = F, digits = 4)`<br>
+$\sigma_2max^2=$ `r confidence_interval_var_vegetarians_max`<br>
+
+$\sigma_1min=$ `r confidence_interval_std_omnivores_min`<br>
+$\sigma_1max=$ `r confidence_interval_std_omnivores_max`<br>
+$\sigma_2min=$ `r confidence_interval_std_vegetarians_min`<br>
+$\sigma_2max=$ `r confidence_interval_std_vegetarians_max`<br>

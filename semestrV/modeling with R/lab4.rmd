@@ -1,0 +1,16 @@
+This is an inline equation $f(x) = 2^3 + \frac{x}{\sqrt{x^2 +1}}$.
+
+Also by declaring an equation like the following:
+\begin{equation}
+e^x = \lim_{x\to \infty} \left( 1  + \frac{x}{n}\right)^{n}
+\end{equation}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,129 @@
+---
+title: "Piotr Dyba Assignment 2"
+author: "Piotr Dyba"
+date: "2022-12-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#ZAD 1_A
+```{r zad1_A}
+zad1_1 <- c(5.5,5.61,4.88,5.07,5.26,5.55,5.36,5.29,5.58,5.65,5.57,5.53,5.62,5.29,5.44,5.34,5.79,5.1,5.27,5.39,5.42,5.47,5.63,5.34,5.46,5.3,5.75,5.68,5.85)
+mean_density = round(mean(zad1_1),3)
+
+```       
+#ZAD 1_B
+```{r zad1_B}
+hist(zad1_1,
+      xlab = 'Meassured Density',
+      ylab = 'Frequency of occurance',
+      main = 'Histogram of Henry Cavendish meassured density',
+      col='darkmagenta')
+
+```
+#ZAD 1_C
+
+We should use the t-test in order to perform hypothesis testing because at that point the population variance is unknown to us
+
+#ZAD 1_D
+```{r zad1_4}
+t.test(zad1_1)$"conf.int"
+```
+
+
+We are rejecting the h0 hyptohesis and accepting the alternative h1 hypothesis. because the 95% confidence interaval for the population mean needs to be somewhere between 5.363888 and 5.31974 values
+
+#ZAD 1_E 
+```{r zad1_e}
+c1_1 <- t.test(zad1_1, mu=5.5,alternative = "less")
+c1_1
+```
+p-value is greater than 0.05 so we fall to reject the h_0 and there is no evidence to support H_1.
+
+
+#ZAD 2
+```{r zad2}
+t.test(iris$Sepal.Width ~ iris$Species, subset = iris$Species%in%c("virginica","versicolor"))
+```
+
+The function above is performing a hypothesis in which it is testing what could be the true difference in means between group versicolor and group virginica.
+This is the welch two sample t-test the p-value is lower than 0.05 so we reject the null hypothesis h_0 and there is evidence to support the alternative hypothesis H_1.
+
+```{r zad3_1}
+model <- lm(iris$Petal.Width ~ iris$Petal.Length)
+plot(iris$Petal.Length, iris$Petal.Width,ylab = 'Petal Width',xlab='Petal Length')
+abline(model, col = "darkmagenta")
+
+```
+```{r zad3_2}
+summary(model)$r.squared
+
+```
+Based on the fact that the r^2 is equal to 0.9271098 we can conclude that the model explains the majority of the variation response variable because it is really close to 1
+
+```{r zad4_A}
+omnivores<-c(0.78, 0.80, 0.76, 0.78, 0.58, 0.64, 0.92, 0.86, 0.62, 0.54, 0.46)
+vegetarians<-c(0.50, 0.32, 0.78, 0.68, 0.46, 0.32, 0.50, 0.68, 0.32, 0.86, 0.40, 0.36, 0.44, 0.62, 0.26)
+
+
+m_omnivores <- qchisq(0.05/2, length(omnivores) - 1)
+M_omnivores <- qchisq(1 - 0.05/2, length(omnivores) - 1)
+m_vegetarians <- qchisq(0.05/2, length(vegetarians) - 1)
+M_vegetarians <- qchisq(1 - 0.05/2, length(vegetarians) - 1)
+
+omnivores_variance = var(omnivores)
+vegetarians_variance = var(vegetarians)
+omnivores_sample_standard_deviation = sqrt(omnivores_variance)
+vegetarians_sample_standard_deviation = sqrt(vegetarians_variance)
+
+lower_bound_population_var_omnivores_1 = ((length(omnivores)-1)*omnivores_sample_standard_deviation^2)/M_omnivores
+upper_bound_population_var_omnivores_1 = ((length(omnivores)-1)*omnivores_sample_standard_deviation^2)/m_omnivores
+
+  
+lower_bound_population_var_vegetarians_1 = ((length(vegetarians)-1)*vegetarians_sample_standard_deviation^2)/M_vegetarians
+upper_bound_population_var_vegetarians_1 = ((length(vegetarians)-1)*vegetarians_sample_standard_deviation^2)/m_vegetarians
+
+
+lower_bound_population_var_omnivores_2 =sqrt(lower_bound_population_var_omnivores_1)
+upper_bound_population_var_omnivores_2 = sqrt(upper_bound_population_var_omnivores_1)
+lower_bound_population_var_vegetarians_2 = sqrt(lower_bound_population_var_vegetarians_1)
+upper_bound_population_var_vegetarians_2 = sqrt(upper_bound_population_var_vegetarians_1)
+
+print('lower and upper bounds for population variance for omnivores')
+lower_bound_population_var_omnivores_1
+upper_bound_population_var_omnivores_1
+print('lower and upper bounds for population variance for vegeterians')
+lower_bound_population_var_vegetarians_1
+upper_bound_population_var_vegetarians_1
+print('lower and upper bounds for standard deviance for omnivores')
+lower_bound_population_var_omnivores_2
+upper_bound_population_var_omnivores_2
+print('lower and upper bounds for standard deviance for vegetarians')
+lower_bound_population_var_vegetarians_2
+upper_bound_population_var_vegetarians_2
+```
+
+```{r zad4_B}
+
+
+confidence_interval_variance_omnivores_min <- ((length(omnivores)-1)* omnivores_variance^2) / M_omnivores
+confidence_interval_variance_omnivores_max <- ((length(omnivores)-1)* omnivores_variance^2) / m_omnivores
+confidence_interval_standard_deviation_omnivores_min <- sqrt(confidence_interval_variance_omnivores_min)
+confidence_interval_standard_deviation_omnivores_max <- sqrt(confidence_interval_variance_omnivores_max)
+
+confidence_interval_variance_vegetarians_min <- ((length(vegetarians)-1)* vegetarians_variance^2) / M_vegetarians
+confidence_interval_variance_vegetarians_max <- ((length(vegetarians)-1)* vegetarians_variance^2) / m_vegetarians
+confidence_interval_standard_deviation_vegetarians_min <- sqrt(confidence_interval_variance_vegetarians_min)
+confidence_interval_standard_deviation_vegetarians_max <- sqrt(confidence_interval_variance_vegetarians_max)
+
+cat('confidence interval variance for omnivores: ','[', paste(confidence_interval_variance_omnivores_min, confidence_interval_variance_omnivores_max, sep=':'),']')
+cat("\n")
+cat('confidence interval standard deviation for omnivores: ','[', paste(confidence_interval_standard_deviation_omnivores_min,confidence_interval_standard_deviation_omnivores_max, sep=':'),']')
+cat("\n")
+cat('confidence interval variance for vegetarians: ','[', paste(confidence_interval_variance_vegetarians_min,confidence_interval_variance_vegetarians_max, sep=':'),']')
+cat("\n")
+cat('confidence interval standard deviation for vegetarians: ','[', paste(confidence_interval_standard_deviation_vegetarians_min,confidence_interval_standard_deviation_vegetarians_max , sep=':'),']')
+cat("\n")
+```

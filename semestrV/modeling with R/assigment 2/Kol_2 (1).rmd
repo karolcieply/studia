@@ -1,0 +1,130 @@
+---
+title: "Assignment 2"
+author: "Karol Ciepły"
+date: "14 grudnia 2022"
+output: html_document
+---
+
+## Exercise 1
+### A.
+```{R}
+d_density <-
+  c(5.5,5.61,4.88,5.07,5.26,5.55,5.36,5.29,5.58,5.65,5.57,5.53,5.62,5.29,5.44,5.34,5.79,5.1,5.27,5.39,5.42,5.47,5.63,5.34,5.46,5.3,5.75,5.68,5.85)
+  
+  density_mean <- mean(d_density)
+  rounded <- round(density_mean, digits = 3)
+  
+  rounded
+```
+
+### B.
+```{R}
+hist(d_density, main = "Histogram of Mr. Cavendish’s observations of the density of the Earth",xlab = "Density in gr / cm ^ 3", col='blue')
+```
+
+### C.
+We will use t-test to perform hypothesis testing because population variance is unknown to us
+
+### D.
+```{R}
+t.test(d_density, mu = 5.1)
+```
+The confidence interval is: $$(5.363888, 5.531974)$$
+The p-value is smaller than 0.05 so we reject the null hypothesis and there is evidence to support the alternative hypothesis, based on our data.
+
+### E.
+```{R}
+t.test(d_density, mu = 5.5, alternative = "less")
+```
+The confidence interval is: $$(-\infty, 5.517726)$$
+The p-value is larger than 0.05, so we fail to reject null hypothesis and there is not enough evidence to support alternative hypothesis, based on our data.
+
+## Exercise 2
+```{R}
+t.test(iris$Sepal.Width ~ iris$Species, subset = iris$Species%in%c("virginica","versicolor"))
+```
+The confidence interval is $$ (-0.33028364, -0.07771636) $$
+Null hypothesis is "true difference in means between group versicolor and group virginica is equal to 0" <br/>
+Alternative hypothesis is "true difference in means between group versicolor and group virginica is not equal to 0" <br/>
+The p-value is smaller than 0.05 so we reject the null hypothesis and there is evidence to support the alternative hypothesis, based on our data.
+
+
+## Exercise 3
+```{R}
+df_iris <- iris
+model <- lm(Petal.Width ~ Petal.Length, data = df_iris)
+summary(model)
+plot(x = df_iris$Petal.Length, y = df_iris$Petal.Width, col='blue')
+abline(model, col='red')
+```
+
+The $R^2 = 0.9271$ so this linear model fits the data well.
+
+## Exercise 4
+
+### A.
+
+\begin{align*}
+\text{We can derive the expression as such:} \\
+P(m \le \frac{(n-1)S^2}{\sigma^2} &\le M) = 1 - \alpha \\
+m \le \frac{(n-1)S^2}{\sigma^2} &\le M \\
+\frac{1}{m} \ge \frac{\sigma^2}{(n-1)S^2} &\ge \frac{1}{M} \\
+\frac{(n-1)S^2}{M} \le \sigma^2 &\le \frac{(n-1)S^2}{m} \\
+\\
+\text{The confidence interval for $ \sigma $ is the square root of the above} \\
+\sqrt{\frac{(n-1)S^2}{M}} \le \sigma &\le \sqrt{\frac{(n-1)S^2}{m}}
+\end{align*}
+
+### B.
+```{R}
+omnivores <-
+  c(0.78, 0.80, 0.76, 0.78, 0.58, 0.64, 0.92, 0.86, 0.62, 0.54, 0.46)
+  
+vegetarians <-
+  c(0.50,0.32,0.78,0.68,0.46,0.32,0.50,0.68,0.32,0.86,0.40,0.36,0.44,0.62,0.26)
+  
+alpha <- 0.05
+
+len_o <- length(omnivores)
+d_freedom_o <- len_o - 1
+
+M_o <- qchisq(1 - alpha / 2, d_freedom_o)
+m_o <- qchisq(alpha / 2, d_freedom_o)
+
+L_o <- (d_freedom_o*var(omnivores)^2) / M_o
+U_o <- (d_freedom_o*var(omnivores)^2) / m_o
+
+L_o
+U_o
+```
+The confidence interval for omnivores for the variance $\sigma^2$ equals $(0.002109219, 0.001330578)$
+```{R}
+len_v <- length(vegetarians)
+d_freedom_v <- len_v - 1
+
+M_v <- qchisq(1 - alpha / 2, d_freedom_v)
+m_v <- qchisq(alpha / 2, d_freedom_v)
+
+L_v <- (d_freedom_v*var(vegetarians)^2) / M_v
+U_v <- (d_freedom_v*var(vegetarians)^2) / m_v
+
+L_v
+U_v
+```
+The confidence interval for vegetarians for the variance $\sigma^2$ equals $(0.0006217113, 0.002884924)$
+```{R}
+Lstd_o <- sqrt(L_o)
+Ustd_o <- sqrt(U_o)
+
+Lstd_o
+Ustd_o
+```
+The confidence interval for omnivores for the standard deviation $\sigma$ equals $(0.01452315, 0.03647709)$
+```{R}
+Lstd_v <- sqrt(L_v)
+Ustd_v <- sqrt(U_v)
+
+Lstd_v
+Ustd_v
+```
+The confidence interval for vegetarians for the standard deviation $\sigma$ equals $(0.02493414, 0.05371149)$
